@@ -1,0 +1,226 @@
+{% extends 'Surprise Verification.html' %}
+{% load static %}
+{% block 'cart' %}
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+<!--<script>
+    window.onload = function(){
+        //USE CUSTOM CONFIRM DIALOG BOX
+        var Oconfirm = new popup("Please click the button to proceed to make payment")
+        Oconfirm.alertPopup()//CONFIRM IF ACTION SHOULD PROCEED
+        var OKclick = document.getElementById(Oconfirm.OK);
+        OKclick.onclick = function(){//IF ACTION SHOULD PROCEED
+            makePayment()
+        }
+    }
+
+    function makePayment(){
+        FlutterwaveCheckout({
+            public_key:"FLWPUBK_TEST-1818fea94138a45ff41c9d7a5d7572a2-X",
+            tx_ref:"{{ tx_ref }}",
+            amount:"{{ packageAmount }}",
+            currency:"NGN",
+            payment_options:"card,banktransfer,ussd",
+            redirect_url:"http://127.0.0.1:8000/?order=successful",
+            meta:{
+                consumer_id:"",
+                consumer_mac:"",
+            },
+            customer:{
+                email:"{{ customerEmail }}",
+                phone_number:"{{ customerTel }}",
+                name:"{{ user.username }}",
+            },
+            customizations:{
+                title:"Beryl Surprise Store",
+                description:"Payment for a Surprise Package",
+                logo:"/static/20220313_123654.png",
+            }
+
+        })
+    }
+</script>-->
+    {% if bootlength %}
+        <div class="selectedItems">
+            <div class="icon">
+                <img src="{% static 'sneakers.png' %}" name="icon">
+            </div>
+            <div class="details">
+                <p>Boots <em>({{ bootlength }})</em></p>
+                <table draggable="true">
+                {% for i in boot %}
+                    <tr>
+                        <td class="oitems">{{ i.name }}</td>
+                        <td class="oitems">{{ i.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if clothlength %}
+        <div class="selectedItems">
+            <div class="icon">
+                <img src="{% static 'T-shirt.png' %}" name="icon">
+            </div>
+            <div class="details">
+                <p>Cloths <em>({{ clothlength }})</em></p>
+                <table draggable="true">
+                {% for i in cloth %}
+                    <tr>
+                        <td class="oitems">{{ i.name }}</td>
+                        <td class="oitems">{{ i.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if framelength %}
+        <div class="selectedItems">
+            <div class="icon">
+                <img src="{% static 'Frame.png' %}" name="icon">
+            </div>
+            <div class="details">
+                <p>Frames <em>({{ framelength }})</em></p>
+                <table draggable="true">
+                {% for i in frame %}
+                    <tr>
+                        <td class="oitems">{{ i.name }}</td>
+                        <td class="oitems">{{ i.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>  
+    {% endif %}
+
+    {% if muglength %}
+        <div class="selectedItems">
+            <div class="icon">
+                <img src="{% static 'Mug.png' %}" name="icon">
+            </div>
+            <div class="details">
+                <p>Mugs <em>({{ muglength }})</em></p>
+                <table draggable="true">
+                {% for i in mug %}
+                    <tr>
+                        <td class="oitems">{{ i.name }}</td>
+                        <td class="oitems">{{ i.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>    
+        </div>
+    {% endif %}
+
+    {% if pillowlength %}
+        <div class="selectedItems">
+            <div class="icon">
+                <img src="{% static 'pillow.png' %}" name="icon">
+            </div>
+            <div class="details">
+                <p>Pillows <em>({{ pillowlength }})</em></p>
+                <table draggable="true">
+                {% for i in pillow %}
+                    <tr>
+                        <td class="oitems">{{ i.name }}</td>
+                        <td class="oitems">{{ i.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if cakelength %}
+        <div class="selectedItems">
+            <div class="icon">
+                <img src="{% static 'cake.png' %}" name="icon">
+            </div>
+            <div class="details">
+                <p>Cakes <em>({{ cakelength }})</em></p>
+                <table draggable="true">
+                {% for i in cake %}
+                    <tr>
+                        <td class="oitems">{{ i.name }}</td>
+                        <td class="oitems">{{ i.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+{% endblock 'cart' %}
+
+{% block 'event' %}
+    <option value="{{ eventType }}">{{ eventType }}</option>
+{% endblock 'event' %}
+
+{% block 'center' %}
+<p id="finalPayment">You will be redirected to a new page to make payment. <span>click the button below</span></p>
+<form id="paymentForm" method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
+    <input type="hidden" name="public_key" value="FLWPUBK_TEST-1818fea94138a45ff41c9d7a5d7572a2-X">
+    <input type="hidden" name="customer[email]" value="{{ customerEmail }}">
+    <input type="hidden" name="customer[name]" value="{{ user.username }}">
+    <input type="hidden" name="tx_ref" value="{{ tx_ref }}">
+    <input type="hidden" name="amount" value="{{ packageAmount }}">
+    <input type="hidden" name="currency" value="NGN">
+    <input type="hidden" name="meta[token]" value="">
+    <input type="hidden" name="redirect_url" value="http://127.0.0.1:8000/">
+    <button type="submit" id="payButt">Pay Now</button>
+</form>
+{% endblock 'center' %}
+
+{% block 'bills' %}
+    {% if bootlength %}
+        <tr class="bills">
+            <td class="item">Boots</td>
+            <td class="price">{{ boot_total_price }}</td>
+        </tr>
+    {% endif %}
+
+    {% if clothlength %}
+        <tr class="bills">
+            <td class="item">Cloths</td>
+            <td class="price">{{ cloth_total_price }}</td>
+        </tr>
+    {% endif %}
+
+    {% if framelength %}
+        <tr class="bills">
+            <td class="item">Frames</td>
+            <td class="price">{{ frame_total_price }}</td>
+        </tr>
+    {% endif %}
+
+    {% if muglength %}
+        <tr class="bills">
+            <td class="item">Mugs</td>
+            <td class="price">{{ mug_total_price }}</td>
+        </tr>
+    {% endif %}
+
+    {% if pillowlength %}
+        <tr class="bills">
+            <td class="item">Pillows</td>
+            <td class="price">{{ pillow_total_price }}</td>
+        </tr>
+    {% endif %}
+
+    {% if cakelength %}
+        <tr class="bills">
+            <td class="item">Cakes</td>
+            <td class="price">{{ cake_total_price }}</td>
+        </tr>
+    {% endif %}
+    <tr class="bills" style="background-color: #fff;">
+        <td class="item">Total</td>
+        <td class="totalprice">{{ total_price }}</td>
+    </tr>
+{% endblock 'bills' %}
+
+{% block 'amount' %} {{ total_price }}.00NGN{% endblock %}
+
+{% block 'itemdetail' %} {{ itemdetail }} {% endblock %}

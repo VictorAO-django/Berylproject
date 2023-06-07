@@ -1,0 +1,250 @@
+{% extends 'Surprise Verification.html' %}
+{% load static %}
+
+{% block 'cart' %}
+    {% if bootlength %}
+        <div class="selectedItems">
+            <div class="icon">
+                <img src="{% static 'sneakers.png' %}" name="icon">
+            </div>
+            <div class="details">
+                <p>Boots <em>({{ bootlength }})</em></p>
+                <table draggable="true">
+                {% for i in boot %}
+                    <tr>
+                        <td class="oitems">{{ i.name }}</td>
+                        <td class="oitems">{{ i.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if clothlength %}
+        <div class="selectedItems">
+            <div class="icon">
+                <img src="{% static 'T-shirt.png' %}" name="icon">
+            </div>
+            <div class="details">
+                <p>Cloths <em>({{ clothlength }})</em></p>
+                <table draggable="true">
+                {% for i in cloth %}
+                    <tr>
+                        <td class="oitems">{{ i.name }}</td>
+                        <td class="oitems">{{ i.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if framelength %}
+        <div class="selectedItems">
+            <div class="icon">
+                <img src="{% static 'Frame.png' %}" name="icon">
+            </div>
+            <div class="details">
+                <p>Frames <em>({{ framelength }})</em></p>
+                <table draggable="true">
+                {% for i in frame %}
+                    <tr>
+                        <td class="oitems">{{ i.name }}</td>
+                        <td class="oitems">{{ i.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>  
+    {% endif %}
+
+    {% if muglength %}
+        <div class="selectedItems">
+            <div class="icon">
+                <img src="{% static 'Mug.png' %}" name="icon">
+            </div>
+            <div class="details">
+                <p>Mugs <em>({{ muglength }})</em></p>
+                <table draggable="true">
+                {% for i in mug %}
+                    <tr>
+                        <td class="oitems">{{ i.name }}</td>
+                        <td class="oitems">{{ i.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>    
+        </div>
+    {% endif %}
+
+    {% if pillowlength %}
+        <div class="selectedItems">
+            <div class="icon">
+                <img src="{% static 'pillow.png' %}" name="icon">
+            </div>
+            <div class="details">
+                <p>Pillows <em>({{ pillowlength }})</em></p>
+                <table draggable="true">
+                {% for i in pillow %}
+                    <tr>
+                        <td class="oitems">{{ i.name }}</td>
+                        <td class="oitems">{{ i.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+
+    {% if cakelength %}
+        <div class="selectedItems">
+            <div class="icon">
+                <img src="{% static 'cake.png' %}" name="icon">
+            </div>
+            <div class="details">
+                <p>Cakes <em>({{ cakelength }})</em></p>
+                <table draggable="true">
+                {% for i in cake %}
+                    <tr>
+                        <td class="oitems">{{ i.name }}</td>
+                        <td class="oitems">{{ i.amount }}</td>
+                    </tr>
+                {% endfor %}
+                </table>
+            </div>
+        </div>
+    {% endif %}
+{% endblock 'cart' %}
+
+
+{% block 'center' %}
+
+    {% if bootlength %}
+        <div class="customize">
+            <p>Choose your Boot size</p>
+            <div>
+                {% for i in boot %}
+                    <div class="bootsize">
+                        <img src="{{ i.picture }}" id="pictures">
+                        <p>{{ i.name }}</p>
+                        <input type="hidden" value="{{ i.code }}" name="bootsizecode" class="{{ i.code }}">
+                        <input type="hidden" value="{{ i.description }}" name="bootsize">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if clothlength %}
+        <div class="customize">
+            <p>Choose your Cloth size</p>
+            <div>
+                {% for i in cloth %}
+                    <div class="clothsize">                       
+                        <img src="{{ i.picture }}" id="pictures">
+                        <p>{{ i.name }}</p>
+                        <input type="hidden" value="{{ i.code }}" name="clothsizecode" class="{{ i.code }}">
+                        <input type="hidden" value="{{ i.description }}" name="clothsize">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if muglength %}
+        <div class="customize">
+            <p>Choose your Mug color</p>
+            <div>
+                {% for i in mug %}
+                    <div class="mugsize">                       
+                        <img src="{{ i.picture }}" id="pictures">
+                        <p>{{ i.name }}</p>
+                        <input type="hidden" value="{{ i.code }}" name="mugsizecode" class="{{ i.code }}">
+                        <input type="hidden" value="{{ i.description }}" name="mugsize">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+
+    {% if framelength %}
+        <div class="customize">
+            <p>Choose your Frame size</p>
+            <div>
+                {% for i in frame %}
+                    <div class="framesize">                       
+                        <img src="{{ i.picture }}" id="pictures">
+                        <p>{{ i.name }}</p>
+                        <input type="hidden" value="{{ i.code }}" name="framesizecode" class="{{ i.code }}">
+                        <input type="hidden" value="{{ i.description }}" name="framesize">                       
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endif %}
+    
+    <div class="makeOrder">
+        <a href="javascript:void submission('detailForm')">Make Order</a>
+    </div>
+{% endblock 'center' %}
+
+
+{% block 'bills' %}
+    {% if bootlength %}
+        <tr class="bills">
+            <td class="item">Boots</td>
+            <td class="price">{{ boot_total_price }}</td>
+        </tr>
+    {% endif %}
+
+    {% if clothlength %}
+        <tr class="bills">
+            <td class="item">Cloths</td>
+            <td class="price">{{ cloth_total_price }}</td>
+        </tr>
+    {% endif %}
+
+    {% if framelength %}
+        <tr class="bills">
+            <td class="item">Frames</td>
+            <td class="price">{{ frame_total_price }}</td>
+        </tr>
+    {% endif %}
+
+    {% if muglength %}
+        <tr class="bills">
+            <td class="item">Mugs</td>
+            <td class="price">{{ mug_total_price }}</td>
+        </tr>
+    {% endif %}
+
+    {% if pillowlength %}
+        <tr class="bills">
+            <td class="item">Pillows</td>
+            <td class="price">{{ pillow_total_price }}</td>
+        </tr>
+    {% endif %}
+
+    {% if cakelength %}
+        <tr class="bills">
+            <td class="item">Cakes</td>
+            <td class="price">{{ cake_total_price }}</td>
+        </tr>
+    {% endif %}
+    <tr class="bills" style="background-color: #fff;">
+        <td class="item">Total</td>
+        <td class="totalprice">{{ total_price }}</td>
+    </tr>
+{% endblock 'bills' %}
+
+{% block 'amount' %} {{ total_price }}.00NGN{% endblock %}
+
+{% block 'itemdetail' %} {{ itemdetail }} {% endblock %}
+
+{% block form %}
+    <form method="POST" id="detailForm" style="display: none;">
+        {{ form.as_p }}
+        {% csrf_token %}
+    </form>                  
+{% endblock form %}

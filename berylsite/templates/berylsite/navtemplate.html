@@ -1,0 +1,122 @@
+{% extends 'Beryl Surprise E-commerce site.html' %}
+{% load static %}
+{% block title %}
+    {{ pagedetail.title }}
+{% endblock title %}
+
+{% block greeting %}
+    {% for i in greeting %}
+        <input name="greeting" type="hidden" value="{{ i }}">
+    {% endfor %}
+{% endblock greeting %}
+
+{% block userImg %}
+    {% ifequal detail.Gender 'M' %}
+        <img src="{% static 'male_user.png' %}" id="userImg">
+    {% else %}
+        {% ifequal detail.Gender 'F' %}
+            <img src="{% static 'female_user.png' %}" id="userImg">
+        {% else %}
+            <img src="{% static 'no_user.png' %}" id="userImg">
+        {% endifequal %}
+    {% endifequal %}
+{% endblock userImg %}
+
+{% block userdetail %}
+    {% if detail %}
+        <p id="userPhoneNo">MobileNo<br><span>{{ detail.MobileNo }}</span></p>
+        <p id="userEmail">Email<br><span>{{ detail.Email }}</span></p>
+    {% else %}
+        <p id="userPhoneNo">MobileNo<br><span>----------------</span></p>
+        <p id="userEmail">Email<br><span>----------------</span></p>
+    {% endif%}
+{% endblock userdetail %}
+
+{% block sidenav %}
+    {% for link in alldetail %}
+        {% ifequal link.title pagedetail.title %}
+            <li id="currID" name="sideli1" style="order:{{ link.id }}">
+                <a href="{{ link.pagelink }}{{ link.id }}" name="{{ link.title }}" id="{{ link.title }}"  onmouseover="showIconName('{{ link.title }}')" onmouseout="hideIconName('{{ link.title }}')">
+                     <img src="/static/{{ link.title }}.png" name="sideliImg">
+                    <span name="sideliSpan" class="{{ link.title }}">{{ link.title }}</span>
+                </a>
+            </li>
+        {% else %}
+            <li name="sideli" style="order:{{ link.id }}">
+                <a href="{{ link.pagelink }}" name="{{ link.title }}" id="{{ link.title }}" onmouseover="showIconName('{{ link.title }}')" onmouseout="hideIconName('{{ link.title }}')">
+                    <img src="/static/{{ link.title }}.png" name="sideliImg">
+                    <span name="sideliSpan" class="{{ link.title }}">{{ link.title }}</span>
+                </a>
+            </li>
+        {% endifequal %}   
+    {% endfor %}
+{% endblock sidenav%}
+
+{% block 'selectedItem' %}
+    {% if valid %}
+        {% for i in boot %}
+            <div class="contentDiv" id="{{ i.code }}">
+                <p class="contentPara1">boot</p>
+                <a class="contentLink1">
+                    <img src="{{ i.picture }}" class="contentImg1">
+                </a>
+                <p class="contentPara2">{{ i.amount }}</p>
+                <a class="contentLink2" href="javascript: Remove('{{ i.code }}')">
+                    <img class="contentImg2" src="{% static 'remove Cart.png' %}">
+                </a>
+            </div>
+        {% endfor %}
+        {% for i in cloth %}
+            <div class="contentDiv" id="{{ i.code }}">
+                <p class="contentPara1">cloth</p>
+                <a class="contentLink1">
+                    <img src="{{ i.picture }}" class="contentImg1">
+                </a>
+                <p class="contentPara2">{{ i.amount }}</p>
+                <a class="contentLink2" href="javascript: Remove('{{ i.code }}')">
+                    <img class="contentImg2" src="{% static 'remove Cart.png' %}">
+                </a>
+            </div>
+        {% endfor %}
+        <button id="createBox">Proceed</button>
+    {% else %}
+        <div id="describe">
+            <img id="describeImg" src="{% static '20220520_194112.png' %}">
+            <p id="describeContent">items you select will appear here</p>
+        </div>
+    {% endif %}
+{% endblock 'selectedItem' %}
+
+{% block frame %}
+    {% autoescape off %}
+        {{ pagedetail.pagecontent }}
+    {% endautoescape off %}
+{% endblock frame %}
+
+{% block 'TransactionHistory' %}
+    {% for i in TransactionHistory %}
+        <tr class="historyrow {% cycle '' 'altrow' %}">
+            <td id="serialNo" class="serialNo"></td>
+            <td id="dateCell">{{ i.datetime }}</td>
+            <td id="itemCell">Clothes,Boots & Cakes</td>
+            <td id="detailCell">Delivery for {{ i.event }} occassion</td>
+            <td id="amountCell">{{ i.amount }}</td>
+            <td id="chargedCell">{{ i.amount }}</td>
+            <td id="statusCell"><p id="status" class="status">{{ i.status }}</p></td>
+        </tr>
+    {% endfor %}
+{% endblock 'TransactionHistory' %}
+
+{% block comment %}
+    <div class="forcomment">
+        <h1>Write us a comment</h1>
+        <form method="POST" validate="novalidate">
+            {{ form.as_p }}
+            <input type="submit" value="comment" id="comment">
+            {% csrf_token%}
+        </form> 
+        {% if submitted %}
+            <p id="receivedComment">Your comment was received by the admin....</p>
+        {% endif %}  
+    </div>
+{% endblock comment%}

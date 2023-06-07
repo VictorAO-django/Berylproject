@@ -1,0 +1,15 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Beryl Account Login Success</title>
+        <link href="{% static 'Registration.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <main>
+            <h1>User registration successful</h1>
+            <p>You have successfully registered</p>
+            <p>click <a href="{% url 'login' %}?next=/">here</a> to login.</p>
+        </main>
+    </body>
+</html>

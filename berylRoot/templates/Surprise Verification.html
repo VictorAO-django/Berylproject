@@ -1,0 +1,148 @@
+{% load static %}
+<html>
+    <head>
+        <title>Surprise Box Verification</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'Surprise%20Verification.css' %}">
+        <link rel="icon" href="">
+        <meta name="author" content="Victor A.O">
+        <meta name="Robots" content="nofollow">
+        <script src="{% static 'Surprise%20Verification.js' %}" role="application" type="text/javascript"></script>
+        
+    </head>
+    <body>
+        <main>
+            <section>
+                <div id="parentDiv">
+                    <form enctype="text/plain" action="">
+                        <label for="Event" id="eventType">Event</label>
+                        <select name="event" id="event" onChange="javascript:assignValue('event')">
+                            {% block 'event' %}
+                            <option value="">select</option>
+                            <option value="birthday">Birthday</option>
+                            <option value="anniversary">Anniversary</option>
+                            <option value="wedding">Wedding</option>
+                            <option value="graduation">Graduation</option>
+                            <option value="coronation">Coronation</option>
+                            <option value="others">others</option>
+                            {% endblock 'event' %}
+                        </select>
+                    </form>
+                    <!--<a href="javascript:test(this)" id="myTest">try</a>-->
+                    <div>
+                        {% block 'cart' %}
+                    
+                        {% endblock 'cart' %}
+                    </div>
+                </div>
+            </section>
+            
+            
+            <section>
+                <div>
+                    <h1>customize selections</h1>
+                    {% block 'center' %}
+                        <div class="customize">
+                            <p>Boot</p>
+                            <form name="Frame" enctype="multipart/form-data" method="post" action="">
+                                <p>Choose your Boot size</p>
+                                <div>
+                                    <label for="borderFrame">Border Frame</label>
+                                    <input type="file" id="borderFrame" name="borderFramePicture" onchange="changePositive(this)">
+                                </div>
+                                <div>
+                                    <label for="borderlessFrame">Borderless Frame</label>
+                                    <input type="file" id="borderlessFrame" name="borderlessFramePicture" onchange="changePositive(this)">
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="customize">
+                            <p>Frame</p>
+                            <form name="Frame" enctype="multipart/form-data" method="post" action="">
+                                <p>Upload your frame Picture</p>
+                                <div>
+                                    <label for="borderFrame">Border Frame</label>
+                                    <input type="file" id="borderFrame" name="borderFramePicture" onchange="changePositive(this)">
+                                </div>
+                                <div>
+                                    <label for="borderlessFrame">Borderless Frame</label>
+                                    <input type="file" id="borderlessFrame" name="borderlessFramePicture" onchange="changePositive(this)">
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="customize">
+                            <p>Pillow</p>
+                            <form name="Pillow" enctype="multipart/form-data" method="post" action="">
+                                <p>Upload Picture for Pillow</p>
+                                <div>
+                                    <label for="frontPicture">Front</label>
+                                    <input type="file" id="borderFrame" name="borderFramePicture" onchange="changePositive(this)">
+                                </div>
+                                <div>
+                                    <label for="backPicture">Back</label>
+                                    <input type="file" id="borderlessFrame" name="borderlessFramePicture" onchange="changePositive(this)">
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="customize">
+                            <p>C-Mug</p>
+                            <form name="Pillow" enctype="multipart/form-data" method="post" action="">
+                                <p>Upload Mug Label or Picture</p>
+                                <div>
+                                    <label for="frontPicture">Front</label>
+                                    <input type="file" id="borderFrame" name="borderFramePicture" onchange="changePositive(this)">
+                                </div>
+                                <div>
+                                    <label for="backPicture">Back</label>
+                                    <input type="file" id="borderlessFrame" name="borderlessFramePicture" onchange="changePositive(this)">
+                                </div>
+                            </form>
+                        </div>
+                    {% endblock 'center' %}
+                </div>
+            </section>
+
+            
+            <section>
+                <div>
+                    <div>
+                        <h1>bills</h1>
+                        <table border="1" rules="rows" cellPadding="3" frame="hsides">
+                            {% block 'bills' %}
+                            {% endblock 'bills' %}
+                        </table>
+                    </div>
+
+                    <div>
+                        <h1>Address & Details</h1>
+                        <form name="Address details" method="post" enctype="text/plain" action="">
+                            <br>
+                            <input id="name" type="text" value="{{ user.username }}" readonly>
+                            <br>
+                            <input id="amount" type="text" value="{% block 'amount' %} {% endblock %}" readonly>
+                            <br>
+                            <input type="text" id="address" name="address" placeholder="address" value="{{ thisUser.Address }}" onchange="assignValue('address')">
+                            <br>
+                            <input type="email" id="email" name="email" placeholder="email" value="{{ thisUser.Email }}" onchange="assignValue('email')">
+                            <br>
+                            <input type="tel" id="tel" name="tel" placeholder="phone number" value="{{ thisUser.MobileNo }}" onchange="assignValue('tel')">
+                            <br>
+                            <textarea id="itemsdetail" style="display: none;">
+                                {% block 'itemdetail' %} {% endblock %}
+                            </textarea>
+                        </form>
+                    </div>
+
+                    <div>
+                        <img src="{% static 'verifyImg2.jpg' %}" id="displayImg" alt="img">
+                    </div> 
+                </div>
+            </section>
+        </main>
+        {% block form %}
+                            
+        {% endblock form %}
+    </body>
+</html>

@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<head>
+    <title>{{ user.username }} Account Setting</title>
+    <link href="{% static 'settings.css' %}" rel="stylesheet">
+    <script src="{% static 'settings.js' %}"></script>
+</head>
+<body>
+    <main>
+        <section>
+            <div id="greeting">Hello <span id='name'>{{ user.username }}</span>!</div>
+            <div id="greeting2">Provide us with required information to improve better use of our website</div>
+            {% if detail %}
+                <form method="POST" novalidate>
+                    <p>
+                        <label for="id_Username">Username:</label> 
+                        <input type="text" name="Username" maxlength="20" required id="id_Username" readonly>
+                    </p>
+                    <p>
+                        <label for="id_Gender">Gender:</label> 
+                        <select name="Gender" required id="id_Gender">
+                            {% ifequal detail.get_Gender_display 'Male' %}
+                                <option value="">---------</option>
+                                <option value="M" selected>Male</option>
+                                <option value="F">Female</option>
+                            {% else %}
+                                {% ifequal detail.get_Gender_display 'Female' %}
+                                    <option value="">---------</option>
+                                    <option value="M">Male</option>
+                                    <option value="F" selected>Female</option>
+                                {% else %}
+                                    <option value="" selected>---------</option>
+                                    <option value="M">Male</option>
+                                    <option value="F">Female</option>
+                                {% endifequal %}
+                            {% endifequal %}
+                        </select>
+                    </p>
+                    <p>
+                        <label for="id_MobileNo">MobileNo:</label> 
+                        <input type="text" name="MobileNo" maxlength="15" required id="id_MobileNo">
+                    </p>
+                    <p>
+                        <label for="id_Email">Email:</label> 
+                        <input type="email" name="Email" maxlength="50" required id="id_Email">
+                    </p>
+                    <p>
+                        <label for="id_Address">Address:</label> 
+                        <input type="text" name="Address" maxlength="100" required id="id_Address">
+                    </p>
+                    {% csrf_token %}
+                    <input type="submit" value="Save" id="submit">
+                </form>
+            {% else %}
+                <form method="POST" novalidate>
+                    {{ form.as_p }}
+                    {% csrf_token %}
+                    <input type="submit" value="Save" id="submit">
+                </form>
+            {% endif %}
+            
+            {% if detail %}
+                <input type="hidden" value="{{ detail.Username }}" id="forUsername">
+                <input type="hidden" value="{{ detail.get_Gender_display }}" id="forGender">
+                <input type="hidden" value="{{ detail.MobileNo }}" id="forMobileNo">
+                <input type="hidden" value="{{ detail.Email }}" id="forEmail">
+                <input type="hidden" value="{{ detail.Address }}" id="forAddress">
+            {% else %}
+                <input type="hidden" value="{{ user.username }}" id="forUsername">
+            {% endif %}
+        </section>
+        <section>
+            <img id="freeimage" src="{% static '20220323_120330.jpg' %}">
+        </section>
+    </main>
+</body>
+</html>

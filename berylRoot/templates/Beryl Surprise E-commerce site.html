@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>
+            {% block title %}
+            {% endblock title %}
+        </title>
+        <link rel="stylesheet" href="{% static 'Beryl Surprise E-commerce.css' %}">
+        <link rel="icon" href="">
+        <meta name="author" content="Victor A.O">
+        <meta name="Robots" content="nofollow">
+        <style>
+            
+        </style>
+
+        <script src="{% static 'Beryl%20javaScript.js' %}" type="text/javascript" role="application"></script>
+        
+    </head>
+    <body>
+        <div class="navigation" id="navigation">
+            <div class="img">
+                <img src="{% static '20220313_123654.png' %}" alt="Beryl Brand">
+            </div>
+            <nav class="topNav">
+                <ul>
+                    <li name="valentine">
+                        {% if user.is_authenticated %}
+                        <a href="/settings/"  name="Settings">Settings</a>
+                        {% else %}
+                        <a href="javascript:ensureLogin()"  name="Settings">Settings</a>
+                        {% endif %}       
+                    </li>
+                    <li name="about">
+                        <a href="javascript:checkWidth()"  name="AboutUs">About</a>
+                    </li>
+                    <li name="contact">
+                        <a href=""  name="contactUs">contact us</a>
+                    </li>
+                    <li name="developer">
+                        <a href="" name="Developer's">Developer's contact</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'logout' %}?next=/" id="Log">Log Out</a>
+                    {% else %}
+                        <a href="{% url 'login' %}?next=/" id="Log">Log In</a>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+
+        <header id="nav">
+            <div class="basicInfo">
+                <p id="basicInfo"></p>
+                {% block greeting %}
+                
+                {% endblock greeting %}
+            </div>
+            <div id="freeimages">
+                <img src="{% static 'artem-beliaikin-nbaig2k2KKA-unsplash.jpg' %}">
+                
+            </div>
+        </header>
+        
+        <marquee behavior="scroll" direction="right" scrollamount="8" scrolldelay="120" bgcolor="#E6FEFF">valentine specials will be available on january 15. It is not available at the moment.</marquee>
+        
+        <main>
+            <section class="sidebar">
+                <div id="forsidebar">
+                    <a href="javascript:minSideBar(this)" id="closeButt"><img src="{% static 'close_bar.png' %}" alt="closeBar"></a>
+                    <div id="user">
+                        <div id="userImgDiv">
+                            {% block userImg %}
+                            
+                            {% endblock userImg %}
+                        </div>
+                        <div id="userDetails">
+                            {% if user.is_authenticated %}
+                                <p id="userName">{{ user.username }}</p>
+                                <input type="hidden" value="True" id="checkUser"><!--USED TO ENSURE IF THERE A LOGGED IN USER IN JAVASCRIPT-->
+                                {% block userdetail %}
+                                
+                                {% endblock userdetail %}
+                            {% else %}
+                                <p id="userName"></p>
+                                <p id="userPhoneNo">Phone <br><span>--------------</span></p>
+                                <p id="userEmail">Email <br><span>--------------</span></p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <nav id="sideNav">
+                        <ul id="sideul">
+                            <p id="sidep">Main Packages</p>
+                            {% block sidenav %}
+
+                            {% endblock sidenav %}
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+            
+            <section class="body">
+                <div>
+                    <section class="frame">
+                        {% block frame %}
+        
+                        {% endblock frame %}
+                    </section>
+                    
+                    <section class="cart" id="surpriseBoxSection">
+                        <div id="surpriseBox">
+                            <p id="shoppingpara">SHOPPING CART</p>
+                            {% block 'selectedItem' %}
+                                <div id="describe">
+                                    <img id="describeImg" src="{% static '20220520_194112.png' %}">
+                                    <p id="describeContent">items you select will appear here</p>
+                                </div>
+                            {% endblock 'selectedItem' %}
+                        </div>
+                    </section>
+                </div>
+
+                <div class="history">
+                    <table border="1" rules="all" cellPadding="3" frame="all">
+                        <caption><b>Latest</b> Transactions</caption>
+                        <thead>
+                            <tr class="thead">
+                                <th>S/N</th>
+                                <th>Date - Time</th>
+                                <th>Item</th>
+                                <th>Detail</th>
+                                <th>Amount-(NGN)</th>
+                                <th>Amount Charged</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% block 'TransactionHistory' %}
+                            {% endblock 'TransactionHistory' %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+        </main>
+        
+        <section class="comment">
+            {% block comment %}
+            
+            {% endblock comment %}
+            <div>
+                <img src="{% static '20220323_120330.jpg' %}" id="cartImg">
+            </div> 
+        </section>
+        
+        <footer>
+            <div>
+                <p id="copyright">@copyright 2023 || All Right Reserved</p>
+                <div>
+                    <a>| About |</a>
+                    <a>Contact Us |</a>
+                    <a>Developer Info |</a>
+                    <a>Read Policy |</a>
+                </div>
+                <div>
+                    <a><img src="{% static 'Twitter.png' %}"></a>
+                    <a><img src="{% static 'Instagram.png' %}"></a>
+                    <a><img src="{% static 'Facebook.png' %}"></a>
+                    <p>BerylSurprise</p>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

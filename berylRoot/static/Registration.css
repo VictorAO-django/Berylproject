@@ -1,0 +1,75 @@
+@font-face {
+    font-family: 'philosopherBold';
+    src: url('font/Philosopher-Bold.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'MontserratRegular';
+    src: url('font/Montserrat-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'MontserratMedium';
+    src: url('font/Montserrat-Medium.ttf') format('truetype');
+}
+@font-face {
+    font-family: 'MontserratThin';
+    src: url('font/Montserrat-Thin.ttf') format('truetype')
+}
+@font-face {
+    font-family: 'philosopherRegular';
+    src: url('font/Philosopher-Regular.ttf') format('truetype');
+}
+
+body{display: flex;
+justify-content: space-around;
+align-items: center;
+margin: 0px;
+padding: 0px;
+background-color: #79868F;}
+
+main{display: flex;
+flex-flow:column;
+border-radius: 8px;
+margin: 50px 0px;
+flex-basis: 50%;
+justify-content: space-around;
+align-items: center;
+filter: drop-shadow(0px 0px 1px #96969665);}
+
+img[id="logo"]{width: 130px;
+margin-bottom: -35px;
+transform: translate(5px,0px);}
+
+form{display: flex;
+flex-flow: column nowrap;
+justify-content: space-around;
+align-items: center;
+width: 60%;
+background-color: #1113141c;
+padding: 20px 30px;}
+
+form>p{display: flex;
+flex-flow: column nowrap;
+width: 100%;
+color: #121212;
+font-family: MontserratRegular;
+font-size: 15px;}
+
+form>input{width: 100%;
+padding: 8px;
+border-radius: 5px;
+border: 1px solid transparent;}
+
+h3{font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+font-size: 22px;
+font-weight: 0px;
+color: #121212;
+letter-spacing: 2px;
+margin-bottom: -10px;}
+
+p{color: #fff;
+font-family: philosopherRegular;
+letter-spacing: 1px;
+font-size: 15px;}
+
+a{text-decoration:  none;
+color: #121212;}
